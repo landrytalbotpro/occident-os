@@ -90,7 +90,7 @@ function KpiCard({ label, hint, value, target, icon: Icon, bar, text, tint }: Kp
         {done && <Badge tone="success">Cumplido</Badge>}
       </div>
       <div className="text-strong mt-3 text-[13px] leading-4 font-semibold">{label}</div>
-      {hint && <div className="text-muted text-xs leading-4">{hint}</div>}
+      <div className="text-muted min-h-4 text-xs leading-4">{hint}</div>
       <div className="text-strong mt-2 text-[28px] leading-8 font-semibold">
         {value} <span className="text-muted text-base font-normal">/ {target}</span>
       </div>
