@@ -9,6 +9,7 @@ import { DeleteProspect } from "./DeleteProspect";
 import { InteractionForm } from "./InteractionForm";
 import { StageBadge } from "./StageBadge";
 import { StageControl } from "./StageControl";
+import { ConvertProspect } from "@/features/clients/components/ConvertProspect";
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -81,6 +82,27 @@ export async function ProspectDetail({ id }: { id: string }) {
               )}
             </div>
           </Card>
+
+          {p.client ? (
+            <Card className="border-success/30 bg-success/5 flex flex-wrap items-center justify-between gap-3">
+              <span className="text-success font-semibold">Ya es cliente.</span>
+              <Link
+                href={`/crm/clients/${p.client.id}`}
+                className="bg-brand text-on-brand hover:bg-brand-hover inline-flex h-10 items-center rounded-sm px-4 font-semibold"
+              >
+                Ver cliente y pólizas
+              </Link>
+            </Card>
+          ) : (
+            p.stage !== "perdido" && (
+              <Card className="flex flex-wrap items-center justify-between gap-3">
+                <span className="text-body">
+                  ¿Ha firmado? Conviértelo en cliente para registrar sus pólizas.
+                </span>
+                <ConvertProspect prospectId={p.id} name={p.full_name} />
+              </Card>
+            )
+          )}
 
           <Card>
             <h2 className="text-strong mb-3 text-base leading-6 font-semibold">Registrar un contacto</h2>
