@@ -19,6 +19,11 @@
   --color-danger: var(--danger);
   --color-info: var(--info);
   --color-focus: var(--focus-ring);
+  --color-cat-total: var(--cat-total);
+  --color-cat-ssgg: var(--cat-ssgg);
+  --color-cat-hogar: var(--cat-hogar);
+  --color-cat-vida: var(--cat-vida);
+  --color-cat-vida-riesgo: var(--cat-vida-riesgo);
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-pill: var(--radius-pill);

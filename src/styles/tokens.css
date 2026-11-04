@@ -28,6 +28,14 @@
   --info: #1d5fa8;
   --focus-ring: #1d5fa8;
 
+  /* Categorías de objetivo (funcionales, no son colores de marca).
+     Distintas también en luminosidad para no depender solo del tono. */
+  --cat-total: #2f6fb5;
+  --cat-ssgg: #0f8a7a;
+  --cat-hogar: #c26f17;
+  --cat-vida: #7a4fc2;
+  --cat-vida-riesgo: #c2416b;
+
   /* Forma */
   --radius-sm: 6px;
   --radius-md: 12px;

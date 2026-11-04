@@ -1,33 +1,101 @@
 import type { Metadata } from "next";
-import { CalendarDays, CheckSquare } from "lucide-react";
+import {
+  CalendarDays,
+  CheckSquare,
+  FileCheck2,
+  Shield,
+  Home,
+  HeartPulse,
+  HeartHandshake,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Badge, Card, EmptyState, PageHeader } from "@/components/ui";
+import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = { title: "Inicio" };
 
 // Estructura del dashboard. Los objetivos vendrán de `targets` y los resultados de la vista mensual (etapa 3).
-// Valores de ejemplo, ficticios.
-const kpis = [
-  { label: "Pólizas", value: 0, target: 42 },
-  { label: "Seguros generales", value: 0, target: 12 },
-  { label: "Hogar", value: 0, target: 6 },
-  { label: "Vida", value: 0, target: 12 },
-  { label: "Vida riesgo", value: 0, target: 6 },
+// VALORES FICTICIOS de ejemplo para ver las barras.
+type Kpi = {
+  label: string;
+  hint?: string;
+  value: number;
+  target: number;
+  icon: LucideIcon;
+  /** Clases de color de la categoría (tokens --cat-*) */
+  bar: string;
+  text: string;
+  tint: string;
+};
+
+const kpis: Kpi[] = [
+  {
+    label: "Pólizas",
+    value: 9,
+    target: 42,
+    icon: FileCheck2,
+    bar: "bg-cat-total",
+    text: "text-cat-total",
+    tint: "bg-cat-total/10",
+  },
+  {
+    label: "Seguros generales",
+    value: 4,
+    target: 12,
+    icon: Shield,
+    bar: "bg-cat-ssgg",
+    text: "text-cat-ssgg",
+    tint: "bg-cat-ssgg/10",
+  },
+  {
+    label: "Hogar",
+    hint: "dentro de SSGG",
+    value: 2,
+    target: 6,
+    icon: Home,
+    bar: "bg-cat-hogar",
+    text: "text-cat-hogar",
+    tint: "bg-cat-hogar/10",
+  },
+  {
+    label: "Vida",
+    value: 3,
+    target: 12,
+    icon: HeartPulse,
+    bar: "bg-cat-vida",
+    text: "text-cat-vida",
+    tint: "bg-cat-vida/10",
+  },
+  {
+    label: "Vida riesgo",
+    hint: "dentro de Vida",
+    value: 6,
+    target: 6,
+    icon: HeartHandshake,
+    bar: "bg-cat-vida-riesgo",
+    text: "text-cat-vida-riesgo",
+    tint: "bg-cat-vida-riesgo/10",
+  },
 ];
 
-function Kpi({ label, value, target }: { label: string; value: number; target: number }) {
+function KpiCard({ label, hint, value, target, icon: Icon, bar, text, tint }: Kpi) {
   const pct = Math.min(100, Math.round((value / target) * 100));
   const done = value >= target;
   return (
-    <Card>
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-muted text-[13px] leading-4 font-semibold">{label}</span>
+    <Card className="flex flex-col">
+      <div className="flex items-start justify-between gap-2">
+        <div className={cn("flex size-9 items-center justify-center rounded-sm", tint)}>
+          <Icon className={cn("size-5", text)} aria-hidden />
+        </div>
         {done && <Badge tone="success">Cumplido</Badge>}
       </div>
+      <div className="text-strong mt-3 text-[13px] leading-4 font-semibold">{label}</div>
+      {hint && <div className="text-muted text-xs leading-4">{hint}</div>}
       <div className="text-strong mt-2 text-[28px] leading-8 font-semibold">
         {value} <span className="text-muted text-base font-normal">/ {target}</span>
       </div>
       <div
-        className="rounded-pill bg-surface-2 mt-3 h-1.5"
+        className={cn("rounded-pill mt-auto h-2", tint)}
         role="progressbar"
         aria-label={`${label}: ${value} de ${target}`}
         aria-valuenow={value}
@@ -35,10 +103,14 @@ function Kpi({ label, value, target }: { label: string; value: number; target: n
         aria-valuemax={target}
       >
         <div
-          className={done ? "rounded-pill bg-success h-1.5" : "rounded-pill bg-brand h-1.5"}
+          className={cn(
+            "rounded-pill h-2 transition-[width] duration-500 motion-reduce:transition-none",
+            bar,
+          )}
           style={{ width: `${pct}%` }}
         />
       </div>
+      <div className="text-muted mt-1.5 text-xs leading-4">{pct}%</div>
     </Card>
   );
 }
@@ -46,7 +118,11 @@ function Kpi({ label, value, target }: { label: string; value: number; target: n
 export default function DashboardPage() {
   return (
     <>
-      <PageHeader title="Inicio" description="Fase inicial · objetivos de 6 meses" />
+      <PageHeader
+        title="Inicio"
+        description="Fase inicial · objetivos de 6 meses"
+        actions={<Badge tone="warning">Datos de ejemplo</Badge>}
+      />
 
       <section aria-labelledby="kpis">
         <h2 id="kpis" className="sr-only">
@@ -54,7 +130,7 @@ export default function DashboardPage() {
         </h2>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
           {kpis.map((k) => (
-            <Kpi key={k.label} {...k} />
+            <KpiCard key={k.label} {...k} />
           ))}
         </div>
       </section>
