@@ -4,3 +4,6 @@ export * from "./Input";
 export * from "./Badge";
 export * from "./EmptyState";
 export * from "./PageHeader";
+export * from "./Select";
+export * from "./Textarea";
+export * from "./Field";

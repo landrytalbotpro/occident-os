@@ -30,4 +30,6 @@ Herramienta interna de trabajo de un agente comercial de seguros autónomo que t
 - Etapa 2 (hecha): auth Supabase (email + contraseña, sin registro público). Proxy en `src/proxy.ts` refresca la sesión y redirige; `requireUser()` (`src/lib/auth.ts`) comprueba en el servidor dentro de `<Suspense>`.
 - Etapa 3 (hecha): esquema en `supabase/migrations/`, RLS por `owner_id` en todas las tablas, FKs compuestas `(owner_id, id)` para impedir enlazar datos de otro usuario, vista `monthly_results` (security_invoker), seed ficticio en `supabase/seed.sql`.
 - Dashboard (hecho): lee `targets`, `monthly_results`, citas de hoy y tareas abiertas (`src/features/dashboard/`). Lecturas con `db()` (`src/lib/db.ts`, siempre en tiempo de petición) dentro de `<Suspense>`. Fechas en zona Europe/Madrid (`src/lib/dates.ts`).
+- Fase 2a (hecha): prospects en `src/features/prospects/` — lista con filtro por etapa y búsqueda (`?etapa=&q=`), alta/edición con Zod y base legal RGPD, ficha con cambio de etapa, historial de interacciones y borrado definitivo. Fechas de formularios en hora de Madrid (`madridLocalToISO`). Tras mutaciones sin redirect: `refresh()` de `next/cache`.
+- Fase 2b (pendiente): conversión a cliente, clientes, pólizas.
 - Los cambios de esquema SIEMPRE con una nueva migración (nunca editar una ya aplicada).
