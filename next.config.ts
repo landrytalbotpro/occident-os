@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  // Permite abrir el servidor de desarrollo desde el móvil en la red local
+  allowedDevOrigins: ["192.168.1.137", "192.168.1.*"],
   partialPrefetching: true,
   turbopack: {
     rules: {
