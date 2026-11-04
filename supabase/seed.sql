@@ -1,8 +1,10 @@
 -- =============================================================================
 -- OCCIDENT OS — Datos FICTICIOS de ejemplo
 -- Nombres, teléfonos y emails inventados (dominio example.com reservado).
--- Se asignan al ÚNICO usuario de Auth. Se puede volver a ejecutar: borra antes
--- los datos de ejemplo de ese usuario.
+-- Se asignan al ÚNICO usuario de Auth.
+-- SEGURIDAD: este script NUNCA borra nada. Si el usuario ya tiene datos
+-- (prospects, clientes, pólizas, tareas, citas, objetivos o fuentes), se niega a
+-- ejecutarse y no toca nada.
 -- =============================================================================
 
 do $$
@@ -21,13 +23,17 @@ begin
   end if;
   select id into uid from auth.users limit 1;
 
-  -- Limpieza de ejemplos anteriores (cascada)
-  delete from public.prospects    where owner_id = uid;
-  delete from public.clients      where owner_id = uid;
-  delete from public.tasks        where owner_id = uid;
-  delete from public.appointments where owner_id = uid;
-  delete from public.targets      where owner_id = uid;
-  delete from public.lead_sources where owner_id = uid;
+  -- Solo en una base vacía para este usuario: nunca borra datos existentes
+  if exists (select 1 from public.prospects    where owner_id = uid)
+  or exists (select 1 from public.clients      where owner_id = uid)
+  or exists (select 1 from public.policies     where owner_id = uid)
+  or exists (select 1 from public.tasks        where owner_id = uid)
+  or exists (select 1 from public.appointments where owner_id = uid)
+  or exists (select 1 from public.interactions where owner_id = uid)
+  or exists (select 1 from public.targets      where owner_id = uid)
+  or exists (select 1 from public.lead_sources where owner_id = uid) then
+    raise exception 'Ya hay datos para este usuario: el seed de ejemplo no se ejecuta (no se ha borrado ni modificado nada).';
+  end if;
 
   -- Fuentes de captación
   insert into public.lead_sources (owner_id, name) values (uid, 'Referido')     returning id into src_ref;
