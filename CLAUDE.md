@@ -28,4 +28,5 @@ Herramienta interna de trabajo de un agente comercial de seguros autónomo que t
 - Por etapas. No adelantar trabajo de etapas siguientes. Validación del usuario entre etapas.
 - Etapa 1 (hecha): proyecto base, tokens, componentes UI, layout responsive, páginas vacías, UI de login sin lógica.
 - Etapa 2 (hecha): auth Supabase (email + contraseña, sin registro público). Proxy en `src/proxy.ts` refresca la sesión y redirige; `requireUser()` (`src/lib/auth.ts`) comprueba en el servidor dentro de `<Suspense>`.
-- Etapa 3: esquema, migraciones, RLS, seed ficticio.
+- Etapa 3 (hecha): esquema en `supabase/migrations/`, RLS por `owner_id` en todas las tablas, FKs compuestas `(owner_id, id)` para impedir enlazar datos de otro usuario, vista `monthly_results` (security_invoker), seed ficticio en `supabase/seed.sql`.
+- Los cambios de esquema SIEMPRE con una nueva migración (nunca editar una ya aplicada).
