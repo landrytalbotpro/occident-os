@@ -1,0 +1,36 @@
+/*
+ * OCCIDENT OS — design tokens
+ * Única fuente de verdad visual. Los componentes nunca usan hex directos.
+ * Los tokens marcados PROVISIONAL se sustituyen cuando llegue el kit de marca autorizado.
+ */
+:root {
+  /* Marca — PROVISIONAL (neutros a propósito, no son colores oficiales) */
+  --brand-primary: #2e3338; /* PROVISIONAL */
+  --brand-primary-hover: #1f2327; /* PROVISIONAL */
+  --brand-accent: #4a5560; /* PROVISIONAL */
+  --on-brand: #ffffff;
+
+  /* Superficies */
+  --surface-0: #ffffff;
+  --surface-1: #f5f6f7;
+  --surface-2: #eceef0;
+  --border: #dde0e3;
+
+  /* Texto */
+  --text-strong: #1a1c1e;
+  --text: #3d4247;
+  --text-muted: #6b7177;
+
+  /* Estados (solo significan estado, nunca decoran) */
+  --success: #1f7a4d;
+  --warning: #8a5a00;
+  --danger: #b42318;
+  --info: #1d5fa8;
+  --focus-ring: #1d5fa8;
+
+  /* Forma */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-pill: 9999px;
+  --shadow-card: 0 1px 2px rgba(26, 28, 30, 0.06), 0 4px 12px rgba(26, 28, 30, 0.06);
+}
