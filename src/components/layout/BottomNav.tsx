@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MoreHorizontal, X } from "lucide-react";
+import { LogOut, MoreHorizontal, X } from "lucide-react";
+import { signOut } from "@/features/auth/actions";
 import { navItems, isActive } from "@/config/nav";
 import { cn } from "@/lib/cn";
 
@@ -69,6 +70,15 @@ export function BottomNav() {
                 </li>
               ))}
             </ul>
+            <form action={signOut} className="mt-3">
+              <button
+                type="submit"
+                className="border-border text-danger flex h-12 w-full items-center justify-center gap-2 rounded-sm border font-semibold"
+              >
+                <LogOut className="size-5" aria-hidden />
+                Cerrar sesión
+              </button>
+            </form>
           </div>
         </div>
       )}

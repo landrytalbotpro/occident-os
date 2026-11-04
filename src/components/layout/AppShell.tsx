@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { SidebarNav } from "./Sidebar";
 import { TopbarTitle } from "./Topbar";
 import { BottomNav } from "./BottomNav";
+import { UserMenu, UserMenuFallback } from "./UserMenu";
+import { AuthGate, ContentFallback } from "./AuthGate";
 
 function Wordmark() {
   return <span className="text-strong text-[15px] font-semibold tracking-wide">OCCIDENT OS</span>;
@@ -31,19 +33,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <TopbarTitle />
             </Suspense>
           </span>
-          <div className="ml-auto flex items-center gap-2">
-            {/* Usuario y cerrar sesión: etapa 2 */}
-            <div
-              className="rounded-pill bg-surface-2 text-muted flex size-8 items-center justify-center text-xs font-semibold"
-              aria-hidden
-            >
-              —
-            </div>
+          <div className="ml-auto">
+            <Suspense fallback={<UserMenuFallback />}>
+              <UserMenu />
+            </Suspense>
           </div>
         </header>
 
         <main className="mx-auto w-full max-w-[1280px] px-4 pt-6 pb-[calc(88px+env(safe-area-inset-bottom))] lg:px-8 lg:pb-10">
-          {children}
+          <Suspense fallback={<ContentFallback />}>
+            <AuthGate>{children}</AuthGate>
+          </Suspense>
         </main>
       </div>
 

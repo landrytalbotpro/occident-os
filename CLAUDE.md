@@ -20,8 +20,12 @@ Herramienta interna de trabajo de un agente comercial de seguros autónomo que t
 - Menú definido en un solo sitio: `src/config/nav.ts`.
 - `cacheComponents` está activo: los componentes que usan `usePathname` van dentro de `<Suspense>`.
 
+## Seguridad
+- La clave secreta de Supabase nunca va al navegador ni al repo. `.env.local` no se sube.
+- Proyecto Supabase en región UE. Registro público desactivado en el panel.
+
 ## Forma de trabajar
 - Por etapas. No adelantar trabajo de etapas siguientes. Validación del usuario entre etapas.
 - Etapa 1 (hecha): proyecto base, tokens, componentes UI, layout responsive, páginas vacías, UI de login sin lógica.
-- Etapa 2: auth Supabase (email + contraseña, sin registro público).
+- Etapa 2 (hecha): auth Supabase (email + contraseña, sin registro público). Proxy en `src/proxy.ts` refresca la sesión y redirige; `requireUser()` (`src/lib/auth.ts`) comprueba en el servidor dentro de `<Suspense>`.
 - Etapa 3: esquema, migraciones, RLS, seed ficticio.
