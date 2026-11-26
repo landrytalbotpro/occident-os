@@ -3,6 +3,11 @@ import { Suspense } from "react";
 import { PageHeader } from "@/components/ui";
 import { Objectives, ObjectivesFallback } from "@/features/dashboard/components/Objectives";
 import { ListFallback, TodayAppointments, UpcomingTasks } from "@/features/dashboard/components/Today";
+import {
+  DueRenewals,
+  DueRenewalsKpi,
+  DueRenewalsKpiFallback,
+} from "@/features/renewals/components/DueRenewals";
 
 export const metadata: Metadata = { title: "Inicio" };
 
@@ -34,6 +39,20 @@ export default function DashboardPage() {
           </Suspense>
         </section>
       </div>
+
+      <section aria-labelledby="vencimientos" className="mt-6">
+        <h2 id="vencimientos" className="text-strong mb-3 text-base leading-6 font-semibold">
+          A llamar · próximos 90 días
+        </h2>
+        <div className="grid gap-4 md:grid-cols-[220px_1fr]">
+          <Suspense fallback={<DueRenewalsKpiFallback />}>
+            <DueRenewalsKpi />
+          </Suspense>
+          <Suspense fallback={<ListFallback />}>
+            <DueRenewals />
+          </Suspense>
+        </div>
+      </section>
     </>
   );
 }

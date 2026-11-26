@@ -9,6 +9,7 @@ import { getClient, listProducts } from "../queries";
 import { LINE_LABEL, MIN_QUALIFYING_PREMIUM, PRODUCT_CATEGORY_LABEL } from "../schema";
 import { PolicyForm } from "./PolicyForm";
 import { PolicyStatusButton } from "./PolicyStatusButton";
+import { RenewalsBlock } from "@/features/renewals/components/RenewalsBlock";
 
 export async function ClientDetail({ id }: { id: string }) {
   const [c, products] = await Promise.all([getClient(id), listProducts()]);
@@ -111,6 +112,7 @@ export async function ClientDetail({ id }: { id: string }) {
               entidad.
             </p>
           </Card>
+          <RenewalsBlock prospectId={c.prospect_id} />
           <Card>
             <h2 className="text-strong mb-1 text-base leading-6 font-semibold">Datos</h2>
             <dl className="divide-border divide-y">

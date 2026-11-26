@@ -10,6 +10,7 @@ import { InteractionForm } from "./InteractionForm";
 import { StageBadge } from "./StageBadge";
 import { StageControl } from "./StageControl";
 import { ConvertProspect } from "@/features/clients/components/ConvertProspect";
+import { RenewalsBlock } from "@/features/renewals/components/RenewalsBlock";
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -162,6 +163,8 @@ export async function ProspectDetail({ id }: { id: string }) {
               </div>
             )}
           </Card>
+
+          <RenewalsBlock prospectId={p.id} />
 
           <Card>
             <h2 className="text-strong mb-3 text-base leading-6 font-semibold">Tareas</h2>

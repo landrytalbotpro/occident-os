@@ -2,6 +2,8 @@
 -- OCCIDENT OS — Datos FICTICIOS de ejemplo
 -- Nombres, teléfonos y emails inventados (dominio example.com reservado).
 -- Se asignan al ÚNICO usuario de Auth.
+-- Si ya ejecutaste este seed antes de existir los vencimientos, usa
+-- supabase/seed_renewals.sql (solo añade, nunca borra ni modifica).
 -- SEGURIDAD: este script NUNCA borra nada. Si el usuario ya tiene datos
 -- (prospects, clientes, pólizas, tareas, citas, objetivos o fuentes), se niega a
 -- ejecutarse y no toca nada.
@@ -132,5 +134,17 @@ begin
     (uid, 'Preparar 3 vídeos de TikTok',            now() + interval '4 days');
   insert into public.tasks (owner_id, client_id, title, due_at, done_at) values
     (uid, c1, 'Mandar bienvenida a Carmen',          now() - interval '2 days', now() - interval '2 days');
+
+  -- Vencimientos en otras compañías (mes relativo a hoy: 3 caen en los próximos 90 días)
+  insert into public.renewals (owner_id, prospect_id, product, month, note) values
+    (uid, p1, 'Hogar',             extract(month from today + 20)::int,  'Le sube mucho cada año'),
+    (uid, p4, 'Coche',             extract(month from today + 45)::int,  null),
+    (uid, p8, 'Vehículos empresa', extract(month from today + 70)::int,  'Dos furgonetas del taller'),
+    (uid, p3, 'RC',                extract(month from today + 135)::int, null),
+    (uid, p2, 'Vida',              extract(month from today + 150)::int, 'Vinculada a la hipoteca'),
+    (uid, p5, 'Local/Comercio',    extract(month from today + 200)::int, null);
+  -- Ya llamado este año: no aparece en «A llamar»
+  insert into public.renewals (owner_id, prospect_id, product, month, handled_year) values
+    (uid, p7, 'Coche', extract(month from today + 40)::int, extract(year from today + 40)::int);
 end;
 $$;
